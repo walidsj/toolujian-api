@@ -27,7 +27,7 @@ class MahasiswaController extends Controller
 
    public function log(Request $request)
    {
-      $logs = Log::where('mahasiswa_id', $request->auth->id)->get();
+      $logs = Log::where('mahasiswa_id', $request->auth->id)->latest()->first();
       return $logs;
    }
 }
