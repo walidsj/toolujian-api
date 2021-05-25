@@ -34,6 +34,6 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
     // restricted
     $router->group(['prefix' => 'mahasiswa', 'middleware' => 'jwt.auth'], function () use ($router) {
         $router->get('/my-profile', ['uses' => 'MahasiswaController@show']);
-        $router->get('/my-last-log', ['uses' => 'MahasiswaController@log']);
+        $router->get('/my-latest-log', ['uses' => 'MahasiswaController@log']);
     });
 });
