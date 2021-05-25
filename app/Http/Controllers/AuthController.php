@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\Mahasiswa;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
@@ -36,6 +37,11 @@ class AuthController extends Controller
       $mahasiswa = Mahasiswa::with('semester')->where('npm', $npm)->where('class', $class[1])->first();
 
       if ($mahasiswa && $mahasiswa->semester->number == $class[0]) {
+
+         $log = new Log();
+         $log->mahasiswa_id = $mahasiswa->id;
+         $log->save();
+
          $token = $this->jwt($mahasiswa);
 
          return response()->json([

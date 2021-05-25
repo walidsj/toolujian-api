@@ -41,14 +41,7 @@ class JwtMiddleware
       // $user = User::find($credentials->sub);
       // $user = Mahasiswa::with('semester', 'prodi', 'jurusan')->find($credentials->sub)->makeHidden('semester_id');
 
-      $user = Mahasiswa::find($credentials->sub)->makeHidden('semester_id');
-      $user->semester = Semester::find($user->semester_id)
-         ->makeHidden('prodi_id', 'created_at', 'updated_at');
-      $user->prodi = Prodi::find($user->semester->prodi_id)
-         ->makeHidden('jurusan_id', 'created_at', 'updated_at');
-      $user->jurusan = Jurusan::find($user->prodi->jurusan_id)
-         ->makeHidden('created_at', 'updated_at');
-      return $user;
+      $user = Mahasiswa::find($credentials->sub);
 
       // Now let's put the user in the request class so that you can grab it from there
       $request->auth = $user;
