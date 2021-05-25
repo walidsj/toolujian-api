@@ -8,6 +8,7 @@ use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use App\Models\Semester;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
@@ -28,6 +29,7 @@ class MahasiswaController extends Controller
    public function log(Request $request)
    {
       $logs = Log::where('mahasiswa_id', $request->auth->id)->latest()->first();
+      $logs->date = Carbon::parse($logs->created_at)->format('d/m/Y H:i');
       return $logs;
    }
 }
