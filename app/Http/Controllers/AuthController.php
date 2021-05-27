@@ -39,8 +39,13 @@ class AuthController extends Controller
       if ($mahasiswa && $mahasiswa->semester->number == $class[0]) {
 
          $log = new Log();
-         $log->mahasiswa_id = $mahasiswa->id;
-         $log->save();
+         if($log->where('mahasiswa_id', $mahasiswa->id)->first()) {
+            $log->mahasiswa_id = $mahasiswa->id;
+            $log->update();
+         } else {
+            $log->mahasiswa_id = $mahasiswa->id;
+            $log->save();
+         }
 
          $token = $this->jwt($mahasiswa);
 
