@@ -38,11 +38,13 @@ class AuthController extends Controller
 
       if ($mahasiswa && $mahasiswa->semester->number == $class[0]) {
 
-         $log = new Log();
-         if($log->where('mahasiswa_id', $mahasiswa->id)->first()) {
+         $logs = Log::where('mahasiswa_id', $mahasiswa->id)->first();
+         if($logs) {
+            $log = Log::find($logs->id);
             $log->mahasiswa_id = $mahasiswa->id;
-            $log->update();
+            $log->save();
          } else {
+            $log = new Log();
             $log->mahasiswa_id = $mahasiswa->id;
             $log->save();
          }
