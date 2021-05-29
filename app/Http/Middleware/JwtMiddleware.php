@@ -2,10 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Jurusan;
+use App\Models\Log;
 use App\Models\Mahasiswa;
-use App\Models\Prodi;
-use App\Models\Semester;
 use Closure;
 use Exception;
 use Firebase\JWT\JWT;
@@ -41,8 +39,30 @@ class JwtMiddleware
       // $user = User::find($credentials->sub);
       // $user = Mahasiswa::with('semester', 'prodi', 'jurusan')->find($credentials->sub)->makeHidden('semester_id');
 
-      $user = Mahasiswa::find($credentials->sub);
+      if (!empty($credentials->sub) && !empty($credentials->log)) {
+         $user = Mahasiswa::find($credentials->sub);
+         if ($user) {
+            $log = Log::where('mahasiswa_id', $user->id)->orderBy('id', 'DESC')->first();
+            if ($log->id != $credentials->log) {
+               return response()->json([
+                  'status' => 'error',
+                  'message' => 'User was logged in a new device.'
+               ], 400);
+            }
 
+            $user->log = $log;
+         } else {
+            return response()->json([
+               'status' => 'error',
+               'message' => 'User not found.'
+            ], 400);
+         }
+      } else {
+         return response()->json([
+            'status' => 'error',
+            'message' => 'Token not provided properly.'
+         ], 400);
+      }
       // Now let's put the user in the request class so that you can grab it from there
       $request->auth = $user;
 
