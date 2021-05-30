@@ -30,6 +30,6 @@ class MahasiswaController extends Controller
       $user->jurusan = Jurusan::find($user->prodi->jurusan_id)
          ->makeHidden('created_at', 'updated_at');
 
-      return $user;
+      return response()->json($user, 200);
    }
 }

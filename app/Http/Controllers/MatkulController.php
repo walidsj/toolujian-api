@@ -16,8 +16,11 @@ class MatkulController extends Controller
    {
       $user = $request->auth;
 
-      $matkuls = Matkul::where('semester_id', $user->semester_id)->orderBy('session', 'ASC')->get();
+      $matkuls = Matkul::where('semester_id', $user->semester_id)
+         ->orderBy('session', 'ASC')
+         ->get()
+         ->makeHidden('semester_id');
 
-      return $matkuls;
+      return response()->json($matkuls, 200);
    }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Message extends Model
 {
 
    /**
@@ -13,7 +13,7 @@ class User extends Model
     * @var array
     */
    protected $fillable = [
-      'email', 'password', 'name', 'api_token', 'role', 'hostClient'
+      'mahasiswa_id', 'message'
    ];
 
    /**
@@ -21,7 +21,13 @@ class User extends Model
     *
     * @var array
     */
-   protected $hidden = [
-      'password'
-   ];
+   protected $hidden = [];
+
+   /**
+    * Get the prodi associated with the user.
+    */
+   public function mahasiswa()
+   {
+      return $this->belongsTo(Mahasiswa::class);
+   }
 }

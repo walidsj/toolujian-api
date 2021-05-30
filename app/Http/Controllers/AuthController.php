@@ -48,7 +48,7 @@ class AuthController extends Controller
          ], 200);
       } else {
 
-         return response([
+         return response()->json([
             'error' => 'Login failed.'
          ], 422);
       }
