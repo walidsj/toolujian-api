@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
+use App\Models\Link;
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use App\Models\Semester;
@@ -29,6 +30,9 @@ class MahasiswaController extends Controller
          ->makeHidden('jurusan_id', 'created_at', 'updated_at');
       $user->jurusan = Jurusan::find($user->prodi->jurusan_id)
          ->makeHidden('created_at', 'updated_at');
+      $user->link = Link::where('semester_id', $user->semester_id)
+         ->where('class', $user->class)->first()
+         ->makeHidden('created_at', 'updated_at', 'semester_id');
 
       return response()->json($user, 200);
    }
