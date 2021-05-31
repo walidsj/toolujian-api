@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Matkul extends Model
+class Dosen extends Model
 {
 
    /**
@@ -12,7 +12,8 @@ class Matkul extends Model
     *
     * @var array
     */
-   protected $fillable = [];
+   protected $fillable = [
+   ];
 
    /**
     * The attributes excluded from the model's JSON form.
@@ -21,8 +22,4 @@ class Matkul extends Model
     */
    protected $hidden = [];
 
-   function dosen()
-   {
-      return $this->hasOne(Dosen::class);
-   }
 }
